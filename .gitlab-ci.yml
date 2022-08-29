@@ -1,0 +1,31 @@
+stages:
+  - Build
+  - Test
+  - Deploy
+
+Build:
+  image: maven:3-openjdk-17
+  stage: Build
+  script:
+    - mvn package -U
+Test:
+  image: maven:3-openjdk-17
+  stage: Test
+  script:
+    - mvn test
+
+Deploy:
+  stage: Deploy
+  only:
+    - deploy
+  tags:
+    - cd-runner
+  script:
+    - sudo docker-compose down
+    - echo "POSTGRES_USER=$POSTGRES_USER" >> .env
+    - echo "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" >> .env
+    - echo "PGADMIN_DEFAULT_EMAIL=$PGADMIN_DEFAULT_EMAIL" >> .env
+    - echo "PGADMIN_DEFAULT_PASSWORD=$PGADMIN_DEFAULT_PASSWORD" >> .env
+    - echo "WEBHOOK_URL=$WEBHOOK_URL" >> .env
+    - sudo docker-compose up -d --build
+
