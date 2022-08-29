@@ -6,6 +6,8 @@ This Java Spring Boot application loads the comments for the newest articles on 
 
 The Application uses the RSS feed and the unofficial API from 20 Minuten to fetch the articles and comments. The comments are converted into a custom data structure and then stored in a database.
 
+This code is part of [my bachelor thesis](https://www.jan-huber.ch/bachelorarbeit) which was created together with Abinas Kuganathan and Joel Hirzel.
+
 ## Spring Scheduler
 
 Spring Scheduler is used to automatically start the import every 4 hours (see class RSSFeedsImporter):
